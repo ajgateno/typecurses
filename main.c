@@ -35,10 +35,10 @@ int main(void)
 
   game_render(game);
 
-  do {
+  while (!game.is_done) {
     game_update(&game);
     game_render(game);
-  } while (!game.is_done);
+  }
 
   game_over_render(game);
 
@@ -114,11 +114,11 @@ void game_render(game_t game)
 void game_over_render(game_t game)
 {
   int end_time_seconds = time(NULL);
-  int time_elapsed_seconds = end_time_seconds - game.start_time_seconds;
-  int words_per_minute = 60 * (game.num_words / time_elapsed_seconds);
+  float time_elapsed_seconds = end_time_seconds - game.start_time_seconds;
+  float words_per_minute = 60.0 * game.num_words / time_elapsed_seconds;
 
   printw("\n");
-  printw("Done! Your speed: %d WPM", words_per_minute);
+  printw("Done! Your speed: %.0f WPM", words_per_minute);
   refresh();
   getch();
   endwin();
